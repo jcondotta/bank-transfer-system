@@ -1,4 +1,4 @@
-package com.jcondotta.banktransfer.valueobjects;
+package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.argumentprovider.BlankValuesArgumentProvider;
 import org.junit.jupiter.api.Test;

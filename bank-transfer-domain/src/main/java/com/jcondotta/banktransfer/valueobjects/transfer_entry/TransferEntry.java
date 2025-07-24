@@ -1,14 +1,18 @@
 package com.jcondotta.banktransfer.valueobjects.transfer_entry;
 
-import com.jcondotta.banktransfer.valueobjects.PartyRecipient;
-import com.jcondotta.banktransfer.valueobjects.PartySender;
+import com.jcondotta.banktransfer.valueobjects.party.PartyRecipient;
+import com.jcondotta.banktransfer.valueobjects.party.PartySender;
 import com.jcondotta.monetary_movement.enums.MovementType;
 import com.jcondotta.monetary_movement.value_objects.MonetaryMovement;
 import com.jcondotta.shared.valueobjects.Currency;
 
 import java.math.BigDecimal;
 
-public interface TransferEntry{
+public sealed interface TransferEntry permits InternalTransferEntry {
+
+    String SENDER_IDENTIFIER_NOT_NULL_MESSAGE = "sender's identifier must not be null.";
+    String RECIPIENT_IDENTIFIER_NOT_NULL_MESSAGE = "recipient's identifier must not be null.";
+    String MONETARY_MOVEMENT_NOT_NULL_MESSAGE = "monetary movement must not be null.";
 
     PartySender partySender();
     PartyRecipient partyRecipient();

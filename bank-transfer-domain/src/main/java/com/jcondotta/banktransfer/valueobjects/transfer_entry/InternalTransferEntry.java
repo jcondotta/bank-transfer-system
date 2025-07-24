@@ -1,13 +1,36 @@
 package com.jcondotta.banktransfer.valueobjects.transfer_entry;
 
-import com.jcondotta.banktransfer.valueobjects.InternalPartyRecipient;
-import com.jcondotta.banktransfer.valueobjects.InternalPartySender;
+import com.jcondotta.bank_account.valueobject.BankAccountId;
+import com.jcondotta.banktransfer.valueobjects.party.InternalAccountRecipient;
+import com.jcondotta.banktransfer.valueobjects.party.InternalAccountSender;
+import com.jcondotta.monetary_movement.enums.MovementType;
+import com.jcondotta.monetary_movement.value_objects.MonetaryAmount;
+import com.jcondotta.monetary_movement.value_objects.MonetaryMovement;
 
-public interface InternalTransferEntry extends TransferEntry {
+import java.util.Objects;
 
-    @Override
-    InternalPartySender partySender();
+public record InternalTransferEntry(InternalAccountSender partySender, InternalAccountRecipient partyRecipient, MonetaryMovement monetaryMovement)
+    implements TransferEntry {
 
-    @Override
-    InternalPartyRecipient partyRecipient();
+    public InternalTransferEntry {
+        Objects.requireNonNull(partySender, SENDER_IDENTIFIER_NOT_NULL_MESSAGE);
+        Objects.requireNonNull(partyRecipient, RECIPIENT_IDENTIFIER_NOT_NULL_MESSAGE);
+        Objects.requireNonNull(monetaryMovement, MONETARY_MOVEMENT_NOT_NULL_MESSAGE);
+    }
+
+    public static InternalTransferEntry of(BankAccountId senderAccountId, BankAccountId recipientAccountId, MovementType movementType, MonetaryAmount monetaryAmount) {
+        return new InternalTransferEntry(
+            InternalAccountSender.of(senderAccountId),
+            InternalAccountRecipient.of(recipientAccountId),
+            MonetaryMovement.of(movementType, monetaryAmount)
+        );
+    }
+
+    public static InternalTransferEntry ofDebit(BankAccountId sourceAccountId, BankAccountId recipientAccountId, MonetaryAmount monetaryAmount) {
+        return of(sourceAccountId, recipientAccountId, MovementType.DEBIT, monetaryAmount);
+    }
+
+    public static InternalTransferEntry ofCredit(BankAccountId sourceAccountId, BankAccountId recipientAccountId, MonetaryAmount monetaryAmount) {
+        return of(sourceAccountId, recipientAccountId, MovementType.CREDIT, monetaryAmount);
+    }
 }

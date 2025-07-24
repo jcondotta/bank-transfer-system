@@ -1,4 +1,4 @@
-package com.jcondotta.banktransfer.valueobjects;
+package com.jcondotta.banktransfer.valueobjects.party;
 
 public sealed interface InternalParty permits InternalPartySender, InternalPartyRecipient {
 

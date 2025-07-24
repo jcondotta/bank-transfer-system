@@ -15,10 +15,6 @@ public record BankAccountId(UUID value) {
         return new BankAccountId(value);
     }
 
-    public boolean is(UUID other) {
-        return value.equals(other);
-    }
-
     @Override
     public String toString() {
         return value.toString();

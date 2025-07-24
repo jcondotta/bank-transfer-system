@@ -1,7 +1,7 @@
 package com.jcondotta.banktransfer.events;
 
-import com.jcondotta.banktransfer.valueobjects.InternalPartyRecipient;
-import com.jcondotta.banktransfer.valueobjects.InternalPartySender;
+import com.jcondotta.banktransfer.valueobjects.party.InternalPartyRecipient;
+import com.jcondotta.banktransfer.valueobjects.party.InternalPartySender;
 import com.jcondotta.monetary_movement.value_objects.MonetaryAmount;
 import com.jcondotta.shared.events.DomainEvent;
 

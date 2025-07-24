@@ -15,10 +15,8 @@ public class MovementTypeAndCurrencyArgumentsProvider implements ArgumentsProvid
         return Stream.of(
             Arguments.of(MovementType.CREDIT, Currency.EUR),
             Arguments.of(MovementType.CREDIT, Currency.USD),
-            Arguments.of(MovementType.CREDIT, Currency.GBP),
             Arguments.of(MovementType.DEBIT, Currency.EUR),
-            Arguments.of(MovementType.DEBIT, Currency.USD),
-            Arguments.of(MovementType.DEBIT, Currency.GBP)
+            Arguments.of(MovementType.DEBIT, Currency.USD)
         );
     }
 }

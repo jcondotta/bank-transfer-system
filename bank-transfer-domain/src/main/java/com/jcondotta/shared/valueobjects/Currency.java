@@ -2,8 +2,7 @@ package com.jcondotta.shared.valueobjects;
 
 public enum Currency {
     EUR("Euro", "€"),
-    USD("US Dollar", "$"),
-    GBP("British Pound", "£");
+    USD("US Dollar", "$");
 
     private final String description;
     private final String symbol;

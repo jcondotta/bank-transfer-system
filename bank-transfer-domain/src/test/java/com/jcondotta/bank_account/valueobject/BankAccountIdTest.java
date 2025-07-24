@@ -23,12 +23,6 @@ class BankAccountIdTest {
     }
 
     @Test
-    void shouldReturnTrue_whenComparingWithSameUUID() {
-        var bankAccountId = BankAccountId.of(BANK_ACCOUNT_UUID_1);
-        assertThat(bankAccountId.is(BANK_ACCOUNT_UUID_1)).isTrue();
-    }
-
-    @Test
     void shouldThrowNullPointerException_whenValueIsNull() {
         assertThatThrownBy(() -> BankAccountId.of(null))
             .isInstanceOf(NullPointerException.class)

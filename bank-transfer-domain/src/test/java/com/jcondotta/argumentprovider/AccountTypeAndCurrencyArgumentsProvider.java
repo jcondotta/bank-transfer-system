@@ -15,10 +15,8 @@ public class AccountTypeAndCurrencyArgumentsProvider implements ArgumentsProvide
         return Stream.of(
             Arguments.of(AccountType.CHECKING, Currency.EUR),
             Arguments.of(AccountType.CHECKING, Currency.USD),
-            Arguments.of(AccountType.CHECKING, Currency.GBP),
             Arguments.of(AccountType.SAVINGS, Currency.EUR),
-            Arguments.of(AccountType.SAVINGS, Currency.USD),
-            Arguments.of(AccountType.SAVINGS, Currency.GBP)
+            Arguments.of(AccountType.SAVINGS, Currency.USD)
         );
     }
 }
