@@ -1,0 +1,12 @@
+package com.jcondotta.usecase.shared;
+
+import com.jcondotta.banktransfer.valueobjects.PartyRecipient;
+import com.jcondotta.banktransfer.valueobjects.PartySender;
+import com.jcondotta.monetary_movement.value_objects.MonetaryAmount;
+
+public interface RequestTransferCommand {
+    PartySender partySender();
+    PartyRecipient partyRecipient();
+    MonetaryAmount monetaryAmount();
+    String reference();
+}
