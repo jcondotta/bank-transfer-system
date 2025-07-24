@@ -1,7 +1,6 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.BankAccountId;
-import com.jcondotta.bank_account.valueobject.Iban;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

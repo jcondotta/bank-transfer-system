@@ -1,11 +1,8 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.Iban;
-import com.jcondotta.shared.valueobjects.testdata.TestClockExamples;
 import com.jcondotta.shared.valueobjects.testdata.TestIbanExamples;
 import org.junit.jupiter.api.Test;
-
-import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
