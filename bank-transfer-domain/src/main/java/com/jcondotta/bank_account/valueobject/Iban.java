@@ -1,7 +1,6 @@
 package com.jcondotta.bank_account.valueobject;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public record Iban(String value) {
 

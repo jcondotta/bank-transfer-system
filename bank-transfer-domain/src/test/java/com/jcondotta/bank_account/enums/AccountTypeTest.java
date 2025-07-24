@@ -1,6 +1,5 @@
 package com.jcondotta.bank_account.enums;
 
-import com.jcondotta.monetary_movement.enums.MovementType;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
