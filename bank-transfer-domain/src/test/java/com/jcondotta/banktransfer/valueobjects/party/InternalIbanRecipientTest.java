@@ -1,6 +1,8 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.Iban;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIbanIdentifier;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
 import com.jcondotta.shared.valueobjects.testdata.TestIbanExamples;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,19 @@ class InternalIbanRecipientTest {
         var recipient = InternalIbanRecipient.of(VALID_SPANISH_IBAN.value());
 
         assertThat(recipient.iban()).isEqualTo(VALID_SPANISH_IBAN);
+    }
+
+    @Test
+    void shouldReturnCorrectIdentifier_whenCallingIdentifierMethod() {
+        var recipient = InternalIbanRecipient.of(VALID_SPANISH_IBAN);
+
+        assertThat(recipient.identifier())
+            .satisfies(identifier -> {
+                assertThat(identifier).isInstanceOf(InternalAccountIbanIdentifier.class);
+                assertThat(((InternalAccountIbanIdentifier) identifier).iban()).isEqualTo(VALID_SPANISH_IBAN);
+                assertThat(identifier.value()).isEqualTo(VALID_SPANISH_IBAN.value());
+                assertThat(identifier.type()).isEqualTo(InternalPartyIdentifierType.IBAN);
+            });
     }
 
     @Test

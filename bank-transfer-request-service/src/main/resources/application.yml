@@ -1,0 +1,24 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: bank-transfer-request-service
+
+aws:
+  region: ${AWS_DEFAULT_REGION}
+  kinesis:
+    streams:
+      request-internal-transfers:
+        stream-name: request-internal-transfers
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+api:
+  v1:
+    bank-transfers:
+      root-path: '/api/v1/bank-transfers'

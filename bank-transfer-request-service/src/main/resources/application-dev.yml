@@ -1,0 +1,6 @@
+aws:
+  access-key-id: test
+  secret-key: test
+  region: us-east-1
+  kinesis:
+    endpoint: 'http://localhost:4566'

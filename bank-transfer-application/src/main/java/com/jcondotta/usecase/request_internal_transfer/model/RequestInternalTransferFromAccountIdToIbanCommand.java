@@ -14,18 +14,6 @@ public record RequestInternalTransferFromAccountIdToIbanCommand(
 
 ) implements RequestInternalTransferCommand {
 
-    public RequestInternalTransferFromAccountIdToIbanCommand {
-        if (partySender == null) {
-            throw new NullPointerException("Sender account ID must not be null");
-        }
-        if (partyRecipient == null) {
-            throw new NullPointerException("Recipient IBAN must not be null");
-        }
-        if (monetaryAmount == null) {
-            throw new NullPointerException("Monetary amount must not be null");
-        }
-    }
-
     public static RequestInternalTransferFromAccountIdToIbanCommand of(InternalAccountSender partySender, InternalIbanRecipient partyRecipient, MonetaryAmount monetaryAmount, String reference) {
         return new RequestInternalTransferFromAccountIdToIbanCommand(partySender, partyRecipient, monetaryAmount, reference);
     }

@@ -11,7 +11,7 @@ import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public record BankTransfer(BankTransferId bankTransferId, List<TransferEntry> transferEntries, TransferType transferType, String reference, ZonedDateTime requestedAt){
+public record BankTransfer(BankTransferId bankTransferId, List<TransferEntry> transferEntries, TransferType transferType, String reference, ZonedDateTime createdAt){
 
     public static BankTransfer initiateInternalTransfer(BankAccountId senderAccountId, BankAccountId recipientAccountId, MonetaryAmount amount, String reference, Clock clock) {
         var entryDebit = InternalTransferEntry.ofDebit(senderAccountId, recipientAccountId, amount);

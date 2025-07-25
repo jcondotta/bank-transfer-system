@@ -1,6 +1,8 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.BankAccountId;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIdIdentifier;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -24,6 +26,19 @@ class InternalAccountSenderTest {
         var accountSender = InternalAccountSender.of(BANK_ACCOUNT_ID.value());
 
         assertThat(accountSender.bankAccountId()).isEqualTo(BANK_ACCOUNT_ID);
+    }
+
+    @Test
+    void shouldReturnCorrectIdentifier_whenCallingIdentifierMethod() {
+        var accountSender = InternalAccountSender.of(BANK_ACCOUNT_ID);
+
+        assertThat(accountSender.identifier())
+            .satisfies(identifier -> {
+                assertThat(identifier).isInstanceOf(InternalAccountIdIdentifier.class);
+                assertThat(((InternalAccountIdIdentifier) identifier).bankAccountId()).isEqualTo(BANK_ACCOUNT_ID);
+                assertThat(identifier.value()).isEqualTo(BANK_ACCOUNT_ID.value().toString());
+                assertThat(identifier.type()).isEqualTo(InternalPartyIdentifierType.ACCOUNT_ID);
+            });
     }
 
     @Test

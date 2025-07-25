@@ -50,8 +50,8 @@ class BankTransferTest {
                 InternalTransferEntry.ofCredit(SENDER_ACCOUNT_ID, RECIPIENT_ACCOUNT_ID, monetaryAmount)
             );
         assertThat(bankTransfer.reference()).isEqualTo(TRANSFER_REFERENCE);
-        assertThat(bankTransfer.requestedAt().toInstant()).isEqualTo(REQUESTED_AT.instant());
-        assertThat(bankTransfer.requestedAt().getZone()).isEqualTo(REQUESTED_AT.getZone());
+        assertThat(bankTransfer.createdAt().toInstant()).isEqualTo(REQUESTED_AT.instant());
+        assertThat(bankTransfer.createdAt().getZone()).isEqualTo(REQUESTED_AT.getZone());
     }
 
     @ParameterizedTest

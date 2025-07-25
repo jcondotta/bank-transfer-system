@@ -1,6 +1,8 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.Iban;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIbanIdentifier;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalPartyIdentifier;
 
 import java.util.Objects;
 
@@ -16,5 +18,10 @@ public record InternalIbanRecipient(Iban iban) implements InternalPartyRecipient
 
     public static InternalIbanRecipient of(String value) {
         return new InternalIbanRecipient(Iban.of(value));
+    }
+
+    @Override
+    public InternalPartyIdentifier identifier() {
+        return InternalAccountIbanIdentifier.of(iban);
     }
 }

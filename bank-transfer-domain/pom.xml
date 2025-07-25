@@ -10,11 +10,18 @@
     </parent>
 
     <artifactId>bank-transfer-domain</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <commons-validator.version>1.7</commons-validator.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

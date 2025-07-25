@@ -1,0 +1,17 @@
+aws:
+  access-key-id: test
+  secret-key: test
+  region: us-east-1
+  kinesis:
+    endpoint: 'http://localhost:4566'
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank_account_transfers_db
+    username: admin
+    password: admin_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false

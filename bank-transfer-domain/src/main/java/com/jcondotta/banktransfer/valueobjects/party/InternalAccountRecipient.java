@@ -1,6 +1,8 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.BankAccountId;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIdIdentifier;
+import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalPartyIdentifier;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -16,6 +18,15 @@ public record InternalAccountRecipient(BankAccountId bankAccountId) implements I
     }
 
     public static InternalAccountRecipient of(UUID bankAccountId) {
-        return new InternalAccountRecipient(BankAccountId.of(bankAccountId));
+        return of(BankAccountId.of(bankAccountId));
+    }
+
+    public static InternalAccountRecipient of(String bankAccountId) {
+        return of(UUID.fromString(bankAccountId));
+    }
+
+    @Override
+    public InternalPartyIdentifier identifier() {
+        return InternalAccountIdIdentifier.of(bankAccountId);
     }
 }
