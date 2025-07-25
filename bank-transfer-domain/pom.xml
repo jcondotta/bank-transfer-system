@@ -13,6 +13,7 @@
     <packaging>jar</packaging>
 
     <properties>
+        <commons-validator.version>1.7</commons-validator.version>
         <junit-jupiter.version>5.13.4</junit-jupiter.version>
         <assertj-core.version>3.27.3</assertj-core.version>
     </properties>
@@ -37,6 +38,12 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj-core.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator.version}</version>
         </dependency>
 
         <dependency>
