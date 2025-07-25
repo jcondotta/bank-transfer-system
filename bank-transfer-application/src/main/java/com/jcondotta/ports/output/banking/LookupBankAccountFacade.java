@@ -37,4 +37,14 @@ public interface LookupBankAccountFacade {
                 throw new RuntimeException("Failed to resolve bank account for identifier: " + partyIdentifier.value(), ex);
             });
     }
+
+//    default CompletableFuture<BankAccount> resolveAsync(InternalPartyIdentifier partyIdentifier, Executor executor) {
+//        return CompletableFuture.supplyAsync(() -> this.resolve(partyIdentifier), executor)
+//            .handle((result, ex) -> {
+//                if (ex != null) {
+//                    throw new RuntimeException("Failed to resolve bank account for identifier: " + partyIdentifier.value(), ex);
+//                }
+//                return result;
+//            });
+//    }
 }

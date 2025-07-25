@@ -1,4 +1,4 @@
-package com.jcondotta.shared.valueobjects.testdata;
+package com.jcondotta.testsupport.iban;
 
 public interface TestIbanExamples {
 

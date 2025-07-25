@@ -7,7 +7,7 @@ import com.jcondotta.banktransfer.valueobjects.transfer_entry.InternalTransferEn
 import com.jcondotta.monetary_movement.value_objects.MonetaryAmount;
 import com.jcondotta.monetary_movement.value_objects.MonetaryMovement;
 import com.jcondotta.shared.valueobjects.Currency;
-import com.jcondotta.shared.valueobjects.testdata.TestClockExamples;
+import com.jcondotta.testsupport.clock.TestClockExamples;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

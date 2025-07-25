@@ -7,7 +7,6 @@ import com.jcondotta.banktransfer.valueobjects.party.InternalIbanRecipient;
 import com.jcondotta.monetary_movement.value_objects.MonetaryAmount;
 
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 public record CreateInternalTransferFromAccountIdToIbanCommand(
     InternalAccountSender partySender,

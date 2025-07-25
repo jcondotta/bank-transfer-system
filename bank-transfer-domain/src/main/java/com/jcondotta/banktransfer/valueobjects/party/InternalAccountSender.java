@@ -1,7 +1,6 @@
 package com.jcondotta.banktransfer.valueobjects.party;
 
 import com.jcondotta.bank_account.valueobject.BankAccountId;
-import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIbanIdentifier;
 import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIdIdentifier;
 import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalPartyIdentifier;
 

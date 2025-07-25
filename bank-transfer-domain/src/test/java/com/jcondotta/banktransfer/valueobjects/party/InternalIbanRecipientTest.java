@@ -3,7 +3,7 @@ package com.jcondotta.banktransfer.valueobjects.party;
 import com.jcondotta.bank_account.valueobject.Iban;
 import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalAccountIbanIdentifier;
 import com.jcondotta.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
-import com.jcondotta.shared.valueobjects.testdata.TestIbanExamples;
+import com.jcondotta.testsupport.iban.TestIbanExamples;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

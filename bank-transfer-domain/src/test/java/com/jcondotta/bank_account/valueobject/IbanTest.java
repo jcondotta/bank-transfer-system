@@ -2,7 +2,7 @@ package com.jcondotta.bank_account.valueobject;
 
 import org.junit.jupiter.api.Test;
 
-import static com.jcondotta.shared.valueobjects.testdata.TestIbanExamples.*;
+import static com.jcondotta.testsupport.iban.TestIbanExamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
