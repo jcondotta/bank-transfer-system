@@ -23,12 +23,4 @@ public enum TestPartyExamples {
     public String getIban() {
         return recipientIban;
     }
-
-    @Override
-    public String toString() {
-        return "TestRecipient{" +
-                "name='" + recipientName + '\'' +
-                ", iban='" + recipientIban + '\'' +
-                '}';
-    }
 }
