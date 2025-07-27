@@ -15,9 +15,6 @@ spring:
     hibernate:
       ddl-auto: create-drop  # For dev/testing only; use 'update' or 'validate' in production
     show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
 
 aws:
   region: ${AWS_DEFAULT_REGION}
@@ -30,3 +27,13 @@ client:
   api:
     bank-accounts:
       base-url: 'http://localhost:8090'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, metrics
+  metrics:
+    distribution:
+      percentiles-histogram:
+        request.internal.transfer.time: true

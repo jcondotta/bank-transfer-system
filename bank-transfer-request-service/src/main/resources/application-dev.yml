@@ -3,4 +3,7 @@ aws:
   secret-key: test
   region: us-east-1
   kinesis:
-    endpoint: 'http://localhost:4566'
+    endpoint: 'http://localhost:4568'
+    streams:
+      request-internal-transfers:
+        stream-name: bank-transfer.internal.requested

@@ -1,0 +1,75 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: bank-transfers-postgres-16-alpine
+    restart: on-failure
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bank_transfers_db
+    volumes:
+      - bank_transfers_postgres_data:/var/lib/postgresql/data
+    networks:
+      - bank_transfers_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d bank_transfers_db || exit 1" ]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  localstack:
+    container_name: "bank-transfers-localstack-4.6.0"
+    image: localstack/localstack:4.6.0
+    ports:
+      - '127.0.0.1:4568:4566'
+    environment:
+      SERVICES: kinesis
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+      LS_LOG: ${LS_LOG:-debug}
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4566/_localstack/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bank_transfers_network
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - ./localstack:/etc/localstack/init/ready.d
+      - bank_transfers_localstack_data:/var/lib/localstack
+
+#  prometheus:
+#    image: prom/prometheus:v2.51.2
+#    container_name: bank-transfer-prometheus
+#    volumes:
+#      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
+#    ports:
+#      - "9090:9090"
+#    networks:
+#      - bank_transfers_network
+#
+#  grafana:
+#    image: grafana/grafana:11.0.0
+#    container_name: bank-transfer-grafana
+#    environment:
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - bank_transfers_network
+#    depends_on:
+#      - prometheus
+volumes:
+  bank_transfers_postgres_data:
+    name: bank-transfers-postgres-data
+  bank_transfers_localstack_data:
+    name: bank-transfers-localstack-data
+
+networks:
+  bank_transfers_network:
+    name: bank-transfers-network
