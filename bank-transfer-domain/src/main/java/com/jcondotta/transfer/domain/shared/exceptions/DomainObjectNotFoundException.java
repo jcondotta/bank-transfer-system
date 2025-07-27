@@ -11,11 +11,6 @@ public class DomainObjectNotFoundException extends RuntimeException {
         this.identifiers = identifiers;
     }
 
-    public DomainObjectNotFoundException(String message, Throwable cause, Serializable... identifiers) {
-        super(message, cause);
-        this.identifiers = identifiers;
-    }
-
     public Serializable[] getIdentifiers() {
         return identifiers;
     }
