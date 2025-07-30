@@ -9,6 +9,7 @@ import java.util.Map;
 public class IdenticalInternalPartiesException extends BusinessRuleException {
 
     public static final String MESSAGE_TEMPLATE = "internal.transfer.identicalParties";
+    public static final String ERROR_TYPE = "/errors/internal-transfer-identical-parties";
 
     private final InternalPartySender internalPartySender;
     private final InternalPartyRecipient internalPartyRecipient;
@@ -21,7 +22,7 @@ public class IdenticalInternalPartiesException extends BusinessRuleException {
 
     @Override
     public String getType() {
-        return "/errors/internal-transfer-identical-parties";
+        return ERROR_TYPE;
     }
 
     @Override

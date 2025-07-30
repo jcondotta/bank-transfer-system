@@ -2,6 +2,7 @@ package com.jcondotta.transfer.domain.banktransfer.valueobjects.transfer_entry;
 
 import com.jcondotta.transfer.domain.argumentprovider.MovementTypeAndCurrencyArgumentsProvider;
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
+import com.jcondotta.transfer.domain.banktransfer.exceptions.IdenticalInternalPartiesException;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountSender;
 import com.jcondotta.transfer.domain.monetary_movement.enums.MovementType;
@@ -80,6 +81,22 @@ class InternalTransferEntryTest {
         assertThat(transferEntry.movementType()).isEqualTo(MovementType.CREDIT);
         assertThat(transferEntry.isCredit()).isTrue();
         assertThat(transferEntry.isDebit()).isFalse();
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(MovementTypeAndCurrencyArgumentsProvider.class)
+    void shouldThrowIdenticalInternalPartiesException_whenPartiesAreTheSame(MovementType movementType, Currency currency) {
+        var monetaryAmount = MonetaryAmount.of(AMOUNT_200, currency);
+        var monetaryMovement = MonetaryMovement.of(movementType, monetaryAmount);
+
+        var bankAccountId = BankAccountId.of(UUID.randomUUID());
+
+        var internalPartySender = InternalAccountSender.of(bankAccountId);
+        var internalPartyRecipient = InternalAccountRecipient.of(bankAccountId);
+
+        assertThatThrownBy(() -> new InternalTransferEntry(internalPartySender, internalPartyRecipient, monetaryMovement))
+            .isInstanceOf(IdenticalInternalPartiesException.class)
+            .hasMessage(IdenticalInternalPartiesException.MESSAGE_TEMPLATE);
     }
 
     @ParameterizedTest

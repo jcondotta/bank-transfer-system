@@ -3,7 +3,6 @@ package com.jcondotta.transfer.domain.banktransfer.events;
 import com.jcondotta.test_support.clock.TestClockExamples;
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
 import com.jcondotta.transfer.domain.banktransfer.entity.BankTransfer;
-import com.jcondotta.transfer.domain.banktransfer.valueobjects.transfer_entry.InternalTransferEntry;
 import com.jcondotta.transfer.domain.monetary_movement.value_objects.MonetaryAmount;
 import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +10,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import java.math.BigDecimal;
 import java.time.Clock;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,9 +21,9 @@ class InternalTransferCompletedEventTest {
 
     private static final BigDecimal AMOUNT_200 = new BigDecimal("200.00");
 
-    private static final String TRANSFER_REFERENCE = "Internal transfer for testing";
-    private static final Clock TRANSFER_INITIATED_AT = TestClockExamples.FIXED_CLOCK_UTC;
-    private static final ZonedDateTime TRANSFER_COMPLETED_AT = TestClockExamples.FIXED_DATE_TIME_UTC;
+    private static final String TRANSFER_REFERENCE = "Invoice #9747263";
+
+    private static final Clock FIXED_CLOCK_UTC = TestClockExamples.FIXED_CLOCK_UTC;
 
     @ParameterizedTest
     @EnumSource(Currency.class)
@@ -35,17 +33,17 @@ class InternalTransferCompletedEventTest {
             RECIPIENT_ACCOUNT_ID,
             MonetaryAmount.of(AMOUNT_200, currency),
             TRANSFER_REFERENCE,
-            TRANSFER_INITIATED_AT
+            FIXED_CLOCK_UTC
         );
 
-        assertThat(InternalTransferCompletedEvent.of(bankTransfer, TRANSFER_INITIATED_AT))
+        assertThat(InternalTransferCompletedEvent.of(bankTransfer, FIXED_CLOCK_UTC))
             .satisfies(completedEvent -> {
                 assertThat(completedEvent.bankTransfer())
                     .usingRecursiveAssertion()
                     .isEqualTo(bankTransfer);
 
-                assertThat(completedEvent.completedAt().toInstant()).isEqualTo(TRANSFER_COMPLETED_AT.toInstant());
-                assertThat(completedEvent.completedAt().getZone()).isEqualTo(TRANSFER_COMPLETED_AT.getZone());
+                assertThat(completedEvent.completedAt().toInstant()).isEqualTo(FIXED_CLOCK_UTC.instant());
+                assertThat(completedEvent.completedAt().getZone()).isEqualTo(FIXED_CLOCK_UTC.getZone());
             });
     }
 }

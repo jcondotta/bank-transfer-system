@@ -8,6 +8,7 @@ import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAcc
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountSender;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalPartyRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalPartySender;
+import com.jcondotta.transfer.domain.shared.exceptions.BusinessRuleException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -29,7 +30,7 @@ class IdenticalInternalPartiesExceptionTest {
         );
 
         assertThat(exception)
-            .isInstanceOf(IdenticalInternalPartiesException.class)
+            .isInstanceOf(BusinessRuleException.class)
             .extracting(Throwable::getMessage)
             .isEqualTo(IdenticalInternalPartiesException.MESSAGE_TEMPLATE);
 
