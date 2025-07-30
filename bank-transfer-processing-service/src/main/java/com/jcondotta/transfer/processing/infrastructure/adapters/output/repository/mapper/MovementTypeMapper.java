@@ -1,7 +1,7 @@
 package com.jcondotta.transfer.processing.infrastructure.adapters.output.repository.mapper;
 
-import com.jcondotta.transfer.processing.infrastructure.adapters.output.repository.enums.MovementTypeEntity;
 import com.jcondotta.transfer.domain.monetary_movement.enums.MovementType;
+import com.jcondotta.transfer.processing.infrastructure.adapters.output.repository.enums.MovementTypeEntity;
 
 public final class MovementTypeMapper {
 

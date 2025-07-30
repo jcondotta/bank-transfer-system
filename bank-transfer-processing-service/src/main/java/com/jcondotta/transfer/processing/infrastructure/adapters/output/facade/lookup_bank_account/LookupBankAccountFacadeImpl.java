@@ -1,5 +1,6 @@
 package com.jcondotta.transfer.processing.infrastructure.adapters.output.facade.lookup_bank_account;
 
+import com.jcondotta.transfer.application.ports.output.banking.LookupBankAccountFacade;
 import com.jcondotta.transfer.domain.bank_account.entity.BankAccount;
 import com.jcondotta.transfer.domain.bank_account.exceptions.BankAccountNotFoundException;
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
@@ -7,7 +8,6 @@ import com.jcondotta.transfer.domain.bank_account.valueobject.Iban;
 import com.jcondotta.transfer.processing.infrastructure.adapters.output.client.lookup_bank_account.LookupBankAccountClient;
 import com.jcondotta.transfer.processing.infrastructure.adapters.output.client.lookup_bank_account.model.BankAccountCdo;
 import com.jcondotta.transfer.processing.infrastructure.adapters.output.facade.lookup_bank_account.mapper.LookupBankAccountCdoFacadeMapper;
-import com.jcondotta.transfer.application.ports.output.banking.LookupBankAccountFacade;
 import feign.FeignException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

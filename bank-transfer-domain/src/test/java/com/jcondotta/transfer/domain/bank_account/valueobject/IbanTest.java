@@ -1,6 +1,5 @@
 package com.jcondotta.transfer.domain.bank_account.valueobject;
 
-import com.jcondotta.transfer.domain.bank_account.valueobject.Iban;
 import org.junit.jupiter.api.Test;
 
 import static com.jcondotta.test_support.iban.TestIbanExamples.*;

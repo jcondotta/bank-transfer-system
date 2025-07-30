@@ -16,35 +16,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus, health, metrics
+        include: prometheus #, health, metrics
   metrics:
     distribution:
       percentiles-histogram:
         request.internal.transfer.time: true
-
-logging:
-  level:
-    io:
-      micrometer:
-        core:
-          aop:
-            TimedAspect: DEBUG
-
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "health, info, metrics, prometheus"
-#  metrics:
-#    distribution:
-#      percentiles-histogram:
-#        http:
-#          server:
-#            requests: true
-#      sla:
-#        http:
-#          server:
-#            requests: 0.1, 0.3, 0.5, 1, 2, 5
 
 springdoc:
   api-docs:
@@ -56,3 +32,5 @@ api:
   v1:
     bank-transfers:
       root-path: '/api/v1/bank-transfers'
+
+

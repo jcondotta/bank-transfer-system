@@ -3,6 +3,8 @@ package com.jcondotta.transfer.processing.application.usecase.internal_transfer;
 import com.jcondotta.test_support.clock.TestClockExamples;
 import com.jcondotta.test_support.iban.TestIbanExamples;
 import com.jcondotta.transfer.application.ports.output.banking.LookupBankAccountFacade;
+import com.jcondotta.transfer.application.ports.output.messaging.InternalTransferCompletedEventProducer;
+import com.jcondotta.transfer.application.ports.output.messaging.InternalTransferFailedEventProducer;
 import com.jcondotta.transfer.application.ports.output.repository.BankTransferRepository;
 import com.jcondotta.transfer.application.usecase.process_internal_transfer.ProcessInternalTransferUseCase;
 import com.jcondotta.transfer.application.usecase.process_internal_transfer.model.CreateInternalTransferFromAccountIdToIbanCommand;
@@ -63,6 +65,12 @@ class ProcessInternalTransferUseCaseImplTest {
     private BankTransferRepository bankTransferRepositoryMock;
 
     @Mock
+    private InternalTransferFailedEventProducer failedEventProducerMock;
+
+    @Mock
+    private InternalTransferCompletedEventProducer completedEventProducerMock;
+
+    @Mock
     private BankAccount accountSenderMock;
 
     @Mock
@@ -78,7 +86,14 @@ class ProcessInternalTransferUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        useCase = new ProcessInternalTransferUseCaseImpl(lookupBankAccountFacadeMock, bankTransferRepositoryMock, executorService, clock);
+        useCase = new ProcessInternalTransferUseCaseImpl(
+            lookupBankAccountFacadeMock,
+            bankTransferRepositoryMock,
+            failedEventProducerMock,
+            completedEventProducerMock,
+            executorService,
+            clock
+        );
     }
 
     @AfterEach
@@ -108,9 +123,6 @@ class ProcessInternalTransferUseCaseImplTest {
 
         useCase.execute(command);
 
-        verify(lookupBankAccountFacadeMock).resolveAsync(any(InternalAccountIdIdentifier.class), any());
-        verify(lookupBankAccountFacadeMock).resolveAsync(any(InternalAccountIbanIdentifier.class), any());
-
         verify(bankTransferRepositoryMock).save(bankTransferCaptor.capture());
         assertThat(bankTransferCaptor.getValue())
             .satisfies(bankTransfer -> {
@@ -126,6 +138,11 @@ class ProcessInternalTransferUseCaseImplTest {
                 assertThat(bankTransfer.createdAt().getZone()).isEqualTo(clock.getZone());
                 assertThat(bankTransfer.reference()).isEqualTo(TRANSFER_REFERENCE);
             });
+
+        verify(lookupBankAccountFacadeMock).resolveAsync(any(InternalAccountIdIdentifier.class), any());
+        verify(lookupBankAccountFacadeMock).resolveAsync(any(InternalAccountIbanIdentifier.class), any());
+        verify(completedEventProducerMock).publish(any());
+        verifyNoInteractions(failedEventProducerMock);
     }
 
     @ParameterizedTest

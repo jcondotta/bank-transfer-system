@@ -1,10 +1,10 @@
 package com.jcondotta.transfer.application.usecase.process_internal_transfer.mapper;
 
+import com.jcondotta.transfer.application.usecase.process_internal_transfer.model.CreateInternalTransferCommand;
 import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferRequestedEvent;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalPartyRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalPartySender;
 import com.jcondotta.transfer.domain.monetary_movement.value_objects.MonetaryAmount;
-import com.jcondotta.transfer.application.usecase.process_internal_transfer.model.CreateInternalTransferCommand;
 import org.mapstruct.Mapper;
 
 import java.time.ZonedDateTime;

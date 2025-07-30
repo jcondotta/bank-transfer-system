@@ -1,7 +1,7 @@
 package com.jcondotta.transfer.processing.infrastructure.adapters.output.repository.mapper;
 
-import com.jcondotta.transfer.processing.infrastructure.adapters.output.repository.enums.CurrencyEntity;
 import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
+import com.jcondotta.transfer.processing.infrastructure.adapters.output.repository.enums.CurrencyEntity;
 
 public class CurrencyMapper {
 

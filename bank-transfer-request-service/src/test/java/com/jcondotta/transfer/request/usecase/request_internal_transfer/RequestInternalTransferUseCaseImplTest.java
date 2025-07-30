@@ -1,12 +1,12 @@
 package com.jcondotta.transfer.request.usecase.request_internal_transfer;
 
-import com.jcondotta.transfer.application.usecase.request_internal_transfer.RequestInternalTransferUseCase;
-import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferRequestedEvent;
-import com.jcondotta.transfer.application.ports.output.messaging.RequestInternalTransferEventProducer;
 import com.jcondotta.test_support.clock.TestClockExamples;
+import com.jcondotta.transfer.application.ports.output.messaging.InternalTransferRequestedEventProducer;
+import com.jcondotta.transfer.application.usecase.request_internal_transfer.RequestInternalTransferUseCase;
 import com.jcondotta.transfer.application.usecase.request_internal_transfer.mapper.RequestInternalTransferCommandMapper;
 import com.jcondotta.transfer.application.usecase.request_internal_transfer.model.RequestInternalTransferFromAccountIdToIbanCommand;
-import com.jcondotta.transfer.request.usecase.request_internal_transfer.RequestInternalTransferUseCaseImpl;
+import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferRequestedEvent;
+import com.jcondotta.transfer.request.application.usecase.request_internal_transfer.RequestInternalTransferUseCaseImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class RequestInternalTransferUseCaseImplTest {
 
     @Mock
-    private RequestInternalTransferEventProducer eventProducer;
+    private InternalTransferRequestedEventProducer eventProducer;
 
     @Mock
     private RequestInternalTransferCommandMapper commandMapper;

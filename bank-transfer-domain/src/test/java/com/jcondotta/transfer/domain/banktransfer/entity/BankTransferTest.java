@@ -1,14 +1,13 @@
 package com.jcondotta.transfer.domain.banktransfer.entity;
 
+import com.jcondotta.test_support.clock.TestClockExamples;
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
-import com.jcondotta.transfer.domain.banktransfer.entity.BankTransfer;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.PartyRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.PartySender;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.transfer_entry.InternalTransferEntry;
 import com.jcondotta.transfer.domain.monetary_movement.value_objects.MonetaryAmount;
 import com.jcondotta.transfer.domain.monetary_movement.value_objects.MonetaryMovement;
 import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
-import com.jcondotta.test_support.clock.TestClockExamples;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

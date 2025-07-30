@@ -1,6 +1,5 @@
 package com.jcondotta.transfer.domain.bank_account.valueobject;
 
-import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

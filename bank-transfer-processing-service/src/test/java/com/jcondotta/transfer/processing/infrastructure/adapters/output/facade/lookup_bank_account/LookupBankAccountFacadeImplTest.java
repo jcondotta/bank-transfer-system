@@ -9,7 +9,7 @@ import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
 import com.jcondotta.transfer.domain.bank_account.valueobject.Iban;
 import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
 import com.jcondotta.transfer.processing.infrastructure.adapters.output.client.lookup_bank_account.LookupBankAccountClient;
-import com.jcondotta.transfer.processing.infrastructure.adapters.output.client.lookup_bank_account.model.*;
+import com.jcondotta.transfer.processing.infrastructure.adapters.output.client.lookup_bank_account.model.LookupBankAccountResponseCdo;
 import com.jcondotta.transfer.processing.infrastructure.adapters.output.facade.lookup_bank_account.mapper.LookupBankAccountCdoFacadeMapper;
 import com.jcondotta.transfer.processing.support.arguments.AccountTypeStatusAndCurrencyArgumentsProvider;
 import com.jcondotta.transfer.processing.support.instancio.BankAccountCdoModel;
@@ -27,7 +27,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.instancio.Select.field;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -1,11 +1,11 @@
 package com.jcondotta.transfer.processing.infrastructure.adapters.input.messaging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferRequestedEvent;
-import com.jcondotta.transfer.processing.infrastructure.adapters.input.messaging.mapper.InternalTransferRequestedEventMapper;
 import com.jcondotta.transfer.application.ports.input.messaing.InternalTransferRequestedEventConsumer;
 import com.jcondotta.transfer.application.usecase.process_internal_transfer.ProcessInternalTransferUseCase;
 import com.jcondotta.transfer.application.usecase.process_internal_transfer.mapper.CreateInternalTransferCommandMapper;
+import com.jcondotta.transfer.processing.infrastructure.adapters.input.messaging.mapper.InternalTransferRequestedEventMapper;
+import com.jcondotta.transfer.processing.infrastructure.properties.RequestedInternalTransferStreamProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,10 +25,11 @@ import java.util.List;
 public class KinesisInternalTransferRequestedEventConsumer implements InternalTransferRequestedEventConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisInternalTransferRequestedEventConsumer.class);
-    private static final String STREAM_NAME = "bank-transfer.internal.requested";
 
     private final KinesisClient kinesisClient;
     private final ProcessInternalTransferUseCase useCase;
+    private final RequestedInternalTransferStreamProperties streamProperties;
+
     private final ObjectMapper objectMapper;
     private final CreateInternalTransferCommandMapper commandMapper;
     private final InternalTransferRequestedEventMapper eventMapper;
@@ -38,7 +39,7 @@ public class KinesisInternalTransferRequestedEventConsumer implements InternalTr
     @PostConstruct
     public void init() {
         String shardId = kinesisClient.describeStream(DescribeStreamRequest.builder()
-                .streamName(STREAM_NAME)
+                .streamName(streamProperties.streamName())
                 .build())
             .streamDescription()
             .shards()
@@ -46,7 +47,7 @@ public class KinesisInternalTransferRequestedEventConsumer implements InternalTr
             .shardId();
 
         GetShardIteratorResponse iteratorResponse = kinesisClient.getShardIterator(GetShardIteratorRequest.builder()
-            .streamName(STREAM_NAME)
+            .streamName(streamProperties.streamName())
             .shardId(shardId)
             .shardIteratorType(ShardIteratorType.TRIM_HORIZON) // ou TRIM_HORIZON se quiser todos os eventos
             .build());

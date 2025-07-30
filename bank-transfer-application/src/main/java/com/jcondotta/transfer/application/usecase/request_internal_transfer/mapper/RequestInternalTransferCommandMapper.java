@@ -1,7 +1,7 @@
 package com.jcondotta.transfer.application.usecase.request_internal_transfer.mapper;
 
-import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferRequestedEvent;
 import com.jcondotta.transfer.application.usecase.request_internal_transfer.model.RequestInternalTransferCommand;
+import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferRequestedEvent;
 import org.mapstruct.Mapper;
 
 import java.time.Clock;

@@ -5,8 +5,13 @@ public final class ValidationErrorMessages {
     private ValidationErrorMessages() {}
 
     public static final String SENDER_ACCOUNT_ID_NOT_NULL = "Sender account ID must not be null";
+
     public static final String RECIPIENT_ACCOUNT_ID_NOT_NULL = "Recipient account ID must not be null";
     public static final String RECIPIENT_IBAN_NOT_NULL = "Recipient IBAN must not be null";
+    public static final String RECIPIENT_IBAN_NOT_VALID = "Recipient IBAN must not be null";
+    public static final String RECIPIENT_IDENTIFIER_MISSING_OR_CONFLICTING =
+        "Recipient must have either IBAN or Account ID, not both or none.";
+
 
     public static final String MONETARY_AMOUNT_NOT_NULL = "Amount must not be null";
     public static final String MONETARY_AMOUNT_ZERO_OR_POSITIVE = "Amount must be zero or greater";

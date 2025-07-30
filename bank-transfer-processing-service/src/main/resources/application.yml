@@ -20,8 +20,13 @@ aws:
   region: ${AWS_DEFAULT_REGION}
   kinesis:
     streams:
-      request-internal-transfers:
-        stream-name: request-internal-transfers
+      internal-transfers:
+        requested:
+          stream-name: bank-transfer.internal.requested
+        failed:
+          stream-name: bank-transfer.internal.failed
+        completed:
+          stream-name: bank-transfer.internal.completed
 
 client:
   api:

@@ -1,8 +1,6 @@
 package com.jcondotta.transfer.domain.banktransfer.valueobjects.party;
 
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
-import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountSender;
-import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.PartySender;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.identifier.InternalAccountIdIdentifier;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
 import org.junit.jupiter.api.Test;

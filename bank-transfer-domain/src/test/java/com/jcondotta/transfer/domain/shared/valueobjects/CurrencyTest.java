@@ -1,6 +1,5 @@
 package com.jcondotta.transfer.domain.shared.valueobjects;
 
-import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,11 +1,9 @@
 package com.jcondotta.transfer.domain.banktransfer.valueobjects.party;
 
+import com.jcondotta.test_support.iban.TestIbanExamples;
 import com.jcondotta.transfer.domain.bank_account.valueobject.Iban;
-import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalIbanRecipient;
-import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.PartyRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.identifier.InternalAccountIbanIdentifier;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
-import com.jcondotta.test_support.iban.TestIbanExamples;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

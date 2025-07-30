@@ -1,6 +1,7 @@
 package com.jcondotta.transfer.domain.banktransfer.valueobjects.transfer_entry;
 
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
+import com.jcondotta.transfer.domain.banktransfer.exceptions.IdenticalInternalPartiesException;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountSender;
 import com.jcondotta.transfer.domain.monetary_movement.enums.MovementType;
@@ -16,6 +17,10 @@ public record InternalTransferEntry(InternalAccountSender partySender, InternalA
         Objects.requireNonNull(partySender, SENDER_IDENTIFIER_NOT_NULL_MESSAGE);
         Objects.requireNonNull(partyRecipient, RECIPIENT_IDENTIFIER_NOT_NULL_MESSAGE);
         Objects.requireNonNull(monetaryMovement, MONETARY_MOVEMENT_NOT_NULL_MESSAGE);
+
+        if (partySender.bankAccountId().equals(partyRecipient.bankAccountId())) {
+            throw new IdenticalInternalPartiesException(partySender, partyRecipient);
+        }
     }
 
     public static InternalTransferEntry of(BankAccountId senderAccountId, BankAccountId recipientAccountId, MovementType movementType, MonetaryAmount monetaryAmount) {

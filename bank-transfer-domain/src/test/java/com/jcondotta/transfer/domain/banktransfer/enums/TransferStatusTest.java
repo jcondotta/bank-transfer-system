@@ -1,6 +1,5 @@
 package com.jcondotta.transfer.domain.banktransfer.enums;
 
-import com.jcondotta.transfer.domain.banktransfer.enums.TransferStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
