@@ -26,7 +26,7 @@ services:
     ports:
       - '127.0.0.1:4568:4566'
     environment:
-      SERVICES: kinesis
+      SERVICES: sqs, kinesis
       AWS_ACCESS_KEY_ID: test
       AWS_SECRET_ACCESS_KEY: test
       AWS_DEFAULT_REGION: us-east-1
@@ -42,6 +42,23 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - ./localstack:/etc/localstack/init/ready.d
       - bank_transfers_localstack_data:/var/lib/localstack
+
+  redis:
+    image: redis:7.4.3
+    container_name: bank-transfers-redis-7.4.3
+    restart: on-failure
+    ports:
+      - "6380:6379"
+    volumes:
+      - bank_transfers_redis:/data
+    networks:
+      - bank_transfers_network
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping || exit 1" ]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
 
 #  prometheus:
 #    image: prom/prometheus:v2.51.2
@@ -65,6 +82,8 @@ services:
 #    depends_on:
 #      - prometheus
 volumes:
+  bank_transfers_redis:
+    name: bank-transfers-redis-data
   bank_transfers_postgres_data:
     name: bank-transfers-postgres-data
   bank_transfers_localstack_data:

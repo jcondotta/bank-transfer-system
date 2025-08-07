@@ -1,6 +1,7 @@
 package com.jcondotta.transfer.processing.infrastructure.adapters.output.facade.lookup_bank_account;
 
 import com.jcondotta.transfer.application.ports.output.banking.LookupBankAccountFacade;
+import com.jcondotta.transfer.application.ports.output.cache.CacheStore;
 import com.jcondotta.transfer.domain.bank_account.entity.BankAccount;
 import com.jcondotta.transfer.domain.bank_account.exceptions.BankAccountNotFoundException;
 import com.jcondotta.transfer.domain.bank_account.valueobject.BankAccountId;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -27,13 +29,31 @@ public class LookupBankAccountFacadeImpl implements LookupBankAccountFacade {
     private final LookupBankAccountClient client;
     private final LookupBankAccountCdoFacadeMapper mapper;
 
+    private final CacheStore<BankAccountCdo> cacheStore;
+
     @Override
     public BankAccount byId(BankAccountId bankAccountId) {
-        return fetch(
-            () -> client.findById(bankAccountId.value()).bankAccountCdo(),
-            () -> new BankAccountNotFoundException(bankAccountId),
-            bankAccountId
-        );
+        var bankAccountCacheKey = BankAccountCacheKey.of(bankAccountId);
+        Supplier<BankAccountCdo> supplier = () -> client.findById(bankAccountId.value()).bankAccountCdo();
+
+        return cacheStore.getOrFetch(bankAccountCacheKey, () -> fetchCdoSafely(supplier, bankAccountId))
+            .map(mapper::map)
+            .orElseThrow(() -> new BankAccountNotFoundException(bankAccountId));
+    }
+
+    private <T> Optional<BankAccountCdo> fetchCdoSafely(Supplier<BankAccountCdo> supplier, T identifier) {
+        try {
+            return Optional.of(supplier.get());
+        } catch (FeignException.NotFound e) {
+            LOGGER.warn("Bank account not found: {}", identifier);
+            return Optional.empty();
+        } catch (FeignException.InternalServerError e) {
+            LOGGER.error("Internal server error while fetching bank account: {}. Reason: {}", identifier, e.getMessage(), e);
+            throw new RuntimeException("Internal error on lookup", e);
+        } catch (FeignException e) {
+            LOGGER.error("Unexpected Feign error while fetching bank account: {}. Status: {}, Message: {}", identifier, e.status(), e.getMessage(), e);
+            throw new RuntimeException("Unexpected error on lookup", e);
+        }
     }
 
     @Override

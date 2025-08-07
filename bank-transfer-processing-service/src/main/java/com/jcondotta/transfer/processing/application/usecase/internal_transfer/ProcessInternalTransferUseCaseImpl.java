@@ -1,15 +1,14 @@
 package com.jcondotta.transfer.processing.application.usecase.internal_transfer;
 
 import com.jcondotta.transfer.application.ports.output.banking.LookupBankAccountFacade;
-import com.jcondotta.transfer.application.ports.output.messaging.InternalTransferCompletedEventProducer;
-import com.jcondotta.transfer.application.ports.output.messaging.InternalTransferFailedEventProducer;
+import com.jcondotta.transfer.application.ports.output.cache.CacheStore;
+import com.jcondotta.transfer.application.ports.output.messaging.processing_internal_transfer.InternalTransferCompletedEventProducer;
 import com.jcondotta.transfer.application.ports.output.repository.BankTransferRepository;
 import com.jcondotta.transfer.application.usecase.process_internal_transfer.ProcessInternalTransferUseCase;
 import com.jcondotta.transfer.application.usecase.process_internal_transfer.model.CreateInternalTransferCommand;
 import com.jcondotta.transfer.domain.bank_account.entity.BankAccount;
 import com.jcondotta.transfer.domain.banktransfer.entity.BankTransfer;
 import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferCompletedEvent;
-import com.jcondotta.transfer.domain.banktransfer.events.InternalTransferFailedEvent;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalParty;
 import com.jcondotta.transfer.domain.shared.exceptions.BusinessRuleException;
 import io.micrometer.core.annotation.Timed;
@@ -27,9 +26,7 @@ public class ProcessInternalTransferUseCaseImpl implements ProcessInternalTransf
     private final LookupBankAccountFacade lookupBankAccountFacade;
     private final BankTransferRepository bankTransferRepository;
 
-    private final InternalTransferFailedEventProducer failedEventProducer;
     private final InternalTransferCompletedEventProducer completedEventProducer;
-
     private final ExecutorService executorService;
     private final Clock clock;
 
@@ -53,13 +50,12 @@ public class ProcessInternalTransferUseCaseImpl implements ProcessInternalTransf
                 accountSender.bankAccountId(), accountRecipient.bankAccountId(), command.monetaryAmount(), command.reference(), clock
             );
 
-            bankTransferRepository.save(bankTransfer);
-            completedEventProducer.publish(InternalTransferCompletedEvent.of(bankTransfer, clock));
+//            bankTransferRepository.save(bankTransfer);
+//            completedEventProducer.publish(InternalTransferCompletedEvent.of(bankTransfer, clock));
         }
         catch (BusinessRuleException e){
 //            var event = new InternalTransferFailedEvent(e.getMessage(), ZonedDateTime.now(clock));
 //            failedEventProducer.publish(event);
-            failedEventProducer.publish(InternalTransferFailedEvent.of(e.getMessage(), clock));
         }
     }
 

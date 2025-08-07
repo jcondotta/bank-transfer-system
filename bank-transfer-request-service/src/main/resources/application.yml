@@ -4,13 +4,26 @@ server:
 spring:
   application:
     name: bank-transfer-request-service
+  cache:
+    type: redis
+    cache-names: bank-transfer-requests
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
-aws:
-  region: ${AWS_DEFAULT_REGION}
-  kinesis:
-    streams:
-      request-internal-transfers:
-        stream-name: ${REQUEST_INTERNAL_TRANSFERS_KINESIS_STREAM_NAME}
+redisson:
+  config: |
+    singleServerConfig:
+      address: "redis://${REDIS_HOST}:${REDIS_PORT}"
+      timeout: 10000
+      connectionPoolSize: 10
+      connectionMinimumIdleSize: 1
+
+cloud:
+  aws:
+    region:
+      static: ${AWS_DEFAULT_REGION}
 
 management:
   endpoints:

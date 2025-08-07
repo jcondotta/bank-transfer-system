@@ -1,6 +1,6 @@
 package com.jcondotta.transfer.application.usecase.request_internal_transfer.model;
 
-import com.jcondotta.transfer.application.usecase.shared.RequestTransferCommand;
+import com.jcondotta.transfer.application.usecase.shared.model.RequestTransferCommand;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalPartyRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalPartySender;
 

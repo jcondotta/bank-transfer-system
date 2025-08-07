@@ -8,12 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
+import java.util.UUID;
 
 @RequestMapping("${api.v1.bank-transfers.root-path}")
 public interface RequestInternalTransferController {
@@ -26,5 +24,8 @@ public interface RequestInternalTransferController {
     })
     @PostMapping(path = "/internal", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    ResponseEntity<String> requestInternalBankTransfer(@Valid @RequestBody InternalTransferRestRequest request, Locale locale);
+    ResponseEntity<String> requestInternalBankTransfer(
+        @Valid @RequestBody InternalTransferRestRequest request,
+        @RequestHeader(name = "X-Idempotency-Key") UUID idempotencyKey,
+        Locale locale);
 }

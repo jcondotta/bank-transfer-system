@@ -10,7 +10,6 @@ import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalIba
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
 import com.jcondotta.transfer.domain.monetary_movement.value_objects.MonetaryAmount;
 import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
-import com.jcondotta.transfer.request.interfaces.messaging.model.InternalTransferRequestedEventDTO;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 

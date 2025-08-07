@@ -1,9 +1,19 @@
-aws:
-  access-key-id: test
-  secret-key: test
-  region: us-east-1
-  kinesis:
-    endpoint: 'http://localhost:4568'
-    streams:
-      request-internal-transfers:
-        stream-name: bank-transfer.internal.requested
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6380
+      database: 0
+
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    credentials:
+      access-key-id: test
+      secret-key: test
+    sqs:
+      endpoint: http://localhost:4568
+      queues:
+        request-internal-transfers:
+          queue-url: 'http://localhost:4568/000000000000/bank-transfer-internal-requested.fifo'

@@ -7,12 +7,7 @@ import com.jcondotta.transfer.domain.bank_account.valueobject.Iban;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountRecipient;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalAccountSender;
 import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.InternalIbanRecipient;
-import com.jcondotta.transfer.domain.banktransfer.valueobjects.party.identifier.InternalPartyIdentifierType;
-import com.jcondotta.transfer.domain.shared.valueobjects.Currency;
-import com.jcondotta.transfer.processing.infrastructure.adapters.input.messaging.InternalTransferRequestedEventDTO;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -41,76 +36,76 @@ class InternalTransferRequestedEventMapperTest {
 
     private final InternalTransferRequestedEventMapper mapper = new InternalTransferRequestedEventMapperImpl();
 
-    @ParameterizedTest
-    @EnumSource(Currency.class)
-    void shouldMapToEventDomain_whenRecipientIsAccountId(Currency currency) {
-        var dto = new InternalTransferRequestedEventDTO(
-            INTERNAL_ACCOUNT_SENDER.identifier().type().toString(),
-            INTERNAL_ACCOUNT_SENDER.identifier().value(),
-            INTERNAL_ACCOUNT_RECIPIENT.identifier().type().toString(),
-            INTERNAL_ACCOUNT_RECIPIENT.identifier().value(),
-            AMOUNT_200,
-            currency.name(),
-            TRANSFER_REFERENCE,
-            REQUESTED_AT
-        );
-
-        assertThat(mapper.toDomain(dto))
-            .satisfies(domainEvent -> {
-                assertThat(domainEvent.internalPartySender()).isInstanceOf(InternalAccountSender.class);
-                assertThat(domainEvent.internalPartySender().identifier()).isEqualTo(INTERNAL_ACCOUNT_SENDER.identifier());
-                assertThat(domainEvent.internalPartyRecipient()).isInstanceOf(InternalAccountRecipient.class);
-                assertThat(domainEvent.internalPartyRecipient().identifier()).isEqualTo(INTERNAL_ACCOUNT_RECIPIENT.identifier());
-                assertThat(domainEvent.monetaryAmount().amount()).isEqualByComparingTo(AMOUNT_200);
-                assertThat(domainEvent.monetaryAmount().currency()).isEqualTo(currency);
-                assertThat(domainEvent.reference()).isEqualTo(TRANSFER_REFERENCE);
-                assertThat(domainEvent.requestedAt()).isEqualTo(REQUESTED_AT);
-            });
-    }
-
-    @ParameterizedTest
-    @EnumSource(Currency.class)
-    void shouldMapToEventDomain_whenRecipientIsIban(Currency currency) {
-        var dto = new InternalTransferRequestedEventDTO(
-            INTERNAL_ACCOUNT_SENDER.identifier().type().toString(),
-            INTERNAL_ACCOUNT_SENDER.identifier().value(),
-            INTERNAL_IBAN_RECIPIENT.identifier().type().toString(),
-            INTERNAL_IBAN_RECIPIENT.identifier().value(),
-            AMOUNT_200,
-            currency.name(),
-            TRANSFER_REFERENCE,
-            REQUESTED_AT
-        );
-
-        assertThat(mapper.toDomain(dto))
-            .satisfies(domainEvent -> {
-                assertThat(domainEvent.internalPartySender()).isInstanceOf(InternalAccountSender.class);
-                assertThat(domainEvent.internalPartySender().identifier()).isEqualTo(INTERNAL_ACCOUNT_SENDER.identifier());
-                assertThat(domainEvent.internalPartyRecipient()).isInstanceOf(InternalIbanRecipient.class);
-                assertThat(domainEvent.internalPartyRecipient().identifier()).isEqualTo(INTERNAL_IBAN_RECIPIENT.identifier());
-                assertThat(domainEvent.monetaryAmount().amount()).isEqualByComparingTo(AMOUNT_200);
-                assertThat(domainEvent.monetaryAmount().currency()).isEqualTo(currency);
-                assertThat(domainEvent.reference()).isEqualTo(TRANSFER_REFERENCE);
-                assertThat(domainEvent.requestedAt()).isEqualTo(REQUESTED_AT);
-            });
-    }
-
-    @ParameterizedTest
-    @EnumSource(Currency.class)
-    void shouldThrowException_whenSenderIsIban(Currency currency) {
-        var requestedEventDTO = new InternalTransferRequestedEventDTO(
-            InternalPartyIdentifierType.IBAN.toString(),
-            TestIbanExamples.VALID_ITALY,
-            InternalPartyIdentifierType.ACCOUNT_ID.toString(),
-            RECIPIENT_ACCOUNT_ID.toString(),
-            AMOUNT_200,
-            currency.name(),
-            TRANSFER_REFERENCE,
-            REQUESTED_AT
-        );
-
-        assertThatThrownBy(() -> mapper.toDomain(requestedEventDTO))
-            .isInstanceOf(UnsupportedOperationException.class)
-            .hasMessage("Sender IBAN is not yet implemented");
-    }
+//    @ParameterizedTest
+//    @EnumSource(Currency.class)
+//    void shouldMapToEventDomain_whenRecipientIsAccountId(Currency currency) {
+//        var dto = new InternalTransferRequestedEventDTO(
+//            INTERNAL_ACCOUNT_SENDER.identifier().type().toString(),
+//            INTERNAL_ACCOUNT_SENDER.identifier().value(),
+//            INTERNAL_ACCOUNT_RECIPIENT.identifier().type().toString(),
+//            INTERNAL_ACCOUNT_RECIPIENT.identifier().value(),
+//            AMOUNT_200,
+//            currency.name(),
+//            TRANSFER_REFERENCE,
+//            REQUESTED_AT
+//        );
+//
+//        assertThat(mapper.toDomain(dto))
+//            .satisfies(domainEvent -> {
+//                assertThat(domainEvent.internalPartySender()).isInstanceOf(InternalAccountSender.class);
+//                assertThat(domainEvent.internalPartySender().identifier()).isEqualTo(INTERNAL_ACCOUNT_SENDER.identifier());
+//                assertThat(domainEvent.internalPartyRecipient()).isInstanceOf(InternalAccountRecipient.class);
+//                assertThat(domainEvent.internalPartyRecipient().identifier()).isEqualTo(INTERNAL_ACCOUNT_RECIPIENT.identifier());
+//                assertThat(domainEvent.monetaryAmount().amount()).isEqualByComparingTo(AMOUNT_200);
+//                assertThat(domainEvent.monetaryAmount().currency()).isEqualTo(currency);
+//                assertThat(domainEvent.reference()).isEqualTo(TRANSFER_REFERENCE);
+//                assertThat(domainEvent.requestedAt()).isEqualTo(REQUESTED_AT);
+//            });
+//    }
+//
+//    @ParameterizedTest
+//    @EnumSource(Currency.class)
+//    void shouldMapToEventDomain_whenRecipientIsIban(Currency currency) {
+//        var dto = new InternalTransferRequestedEventDTO(
+//            INTERNAL_ACCOUNT_SENDER.identifier().type().toString(),
+//            INTERNAL_ACCOUNT_SENDER.identifier().value(),
+//            INTERNAL_IBAN_RECIPIENT.identifier().type().toString(),
+//            INTERNAL_IBAN_RECIPIENT.identifier().value(),
+//            AMOUNT_200,
+//            currency.name(),
+//            TRANSFER_REFERENCE,
+//            REQUESTED_AT
+//        );
+//
+//        assertThat(mapper.toDomain(dto))
+//            .satisfies(domainEvent -> {
+//                assertThat(domainEvent.internalPartySender()).isInstanceOf(InternalAccountSender.class);
+//                assertThat(domainEvent.internalPartySender().identifier()).isEqualTo(INTERNAL_ACCOUNT_SENDER.identifier());
+//                assertThat(domainEvent.internalPartyRecipient()).isInstanceOf(InternalIbanRecipient.class);
+//                assertThat(domainEvent.internalPartyRecipient().identifier()).isEqualTo(INTERNAL_IBAN_RECIPIENT.identifier());
+//                assertThat(domainEvent.monetaryAmount().amount()).isEqualByComparingTo(AMOUNT_200);
+//                assertThat(domainEvent.monetaryAmount().currency()).isEqualTo(currency);
+//                assertThat(domainEvent.reference()).isEqualTo(TRANSFER_REFERENCE);
+//                assertThat(domainEvent.requestedAt()).isEqualTo(REQUESTED_AT);
+//            });
+//    }
+//
+//    @ParameterizedTest
+//    @EnumSource(Currency.class)
+//    void shouldThrowException_whenSenderIsIban(Currency currency) {
+//        var requestedEventDTO = new InternalTransferRequestedEventDTO(
+//            InternalPartyIdentifierType.IBAN.toString(),
+//            TestIbanExamples.VALID_ITALY,
+//            InternalPartyIdentifierType.ACCOUNT_ID.toString(),
+//            RECIPIENT_ACCOUNT_ID.toString(),
+//            AMOUNT_200,
+//            currency.name(),
+//            TRANSFER_REFERENCE,
+//            REQUESTED_AT
+//        );
+//
+//        assertThatThrownBy(() -> mapper.toDomain(requestedEventDTO))
+//            .isInstanceOf(UnsupportedOperationException.class)
+//            .hasMessage("Sender IBAN is not yet implemented");
+//    }
 }

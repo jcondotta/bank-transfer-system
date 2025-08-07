@@ -5,6 +5,15 @@ spring:
   application:
     name: bank-transfer-processing-service
 
+  cache:
+    type: redis
+    redis:
+      cache-null-values: false
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
@@ -16,17 +25,23 @@ spring:
       ddl-auto: create-drop  # For dev/testing only; use 'update' or 'validate' in production
     show-sql: false
 
-aws:
-  region: ${AWS_DEFAULT_REGION}
-  kinesis:
-    streams:
-      internal-transfers:
-        requested:
-          stream-name: bank-transfer.internal.requested
-        failed:
-          stream-name: bank-transfer.internal.failed
-        completed:
-          stream-name: bank-transfer.internal.completed
+redisson:
+  config: |
+    singleServerConfig:
+      address: "redis://${REDIS_HOST}:${REDIS_PORT}"
+      timeout: 10000
+      connectionPoolSize: 10
+      connectionMinimumIdleSize: 1
+
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    sqs:
+      endpoint: http://localhost:4568
+      queues:
+        request-internal-transfers:
+          queue-name: 'bank-transfer-internal-requested.fifo'
 
 client:
   api:
